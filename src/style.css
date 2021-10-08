@@ -1,0 +1,42 @@
+body {
+    display: grid;
+    grid-template-areas: 
+        "a a"
+        "b c";
+    grid-template-columns: 10vw 1fr;
+}
+
+#title {
+    grid-area: a;
+    margin: auto;
+}
+
+nav {
+    grid-area: b;
+    background-color: rgb(255, 149, 149);
+}
+
+main {
+    grid-area: c;
+    background-color: rgb(145, 145, 255);
+    padding: 20px;
+}
+
+.task {
+    display: flex;
+    background-color: rgb(164, 255, 164);
+    width: 80vw;
+    padding: 20px;
+}
+
+.task-card {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgb(255, 221, 159);
+    width: 60vw;
+    padding: 20px;
+}
+
+.task-card p {
+    width: 60vw;
+}

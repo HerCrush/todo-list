@@ -1,4 +1,5 @@
 function project (title) {
+
     const container = document.createElement('div');
     const header = document.createElement('h3');
     const button = document.createElement('button');
@@ -13,9 +14,11 @@ function project (title) {
     document.querySelector('nav').appendChild(button);
 
     return {container};
+
 };
 
 function task (title, date, description, priority, project) {
+
     const bigContainer = document.createElement('div');
     const container = document.createElement('div');
     const titleH = document.createElement('h4');
@@ -34,13 +37,27 @@ function task (title, date, description, priority, project) {
     container.classList.add('task-card');
     editB.classList.add('task-edit');
     deleteB.classList.add('task-delete');
+    container.classList.add(priority);
+
+    container.addEventListener( 'click', showHideDescription);
 
     container.append(titleH, dateH, descriptionP);
     bigContainer.append(container, editB, deleteB);
     project.container.appendChild(bigContainer);
+
+}
+
+function showHideDescription () {
+
+    if (window.getSelection().type != 'Range') {
+        this.classList.toggle('expanded');
+    }
+
 }
 
 export {
+
     project,
     task
+    
 };

@@ -32,11 +32,23 @@ main {
 .task-card {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     background-color: rgb(255, 221, 159);
     width: 60vw;
+    height: 1em;
     padding: 20px;
+    overflow: hidden;
+}
+
+.task button {
+    height: 2em;
 }
 
 .task-card p {
     width: 60vw;
+    margin-top: 1.5em;
+}
+
+.expanded {
+    height: auto;
 }

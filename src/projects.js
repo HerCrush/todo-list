@@ -6,7 +6,9 @@ function project ( name ) {
 
     const dom = newProject(name);
 
-    return { num, dom };
+    let todos = [];
+
+    return { num, dom, todos };
 
 }
 

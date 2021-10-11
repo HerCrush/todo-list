@@ -1,24 +1,34 @@
-function loadDOM () {
+const addProject = (() => {
 
-    addProjectInput();
+    const input = document.createElement('input');
+    const button = document.createElement('button');
+
+    const load = () => {
+
+        input.placeholder = 'New Project';
+        input.id = 'project-input';
+        button.textContent = '+';
+        button.id = 'new-project';
+
+        document.querySelector('main').append( input, button );
+
+    }
+
+    return { load, button, input };
+
+})();
+
+const loadDOM = (() => {
+
+    const refresh = () => {
+
+        addProject.load();
+        
+    };
+
+    return { refresh, addProject };
     
-}
-
-function addProjectInput () {
-
-    const addProjInput = document.createElement('input');
-    const addProjBtn = document.createElement('button');
-
-    addProjInput.placeholder = 'New Project';
-    addProjInput.id = 'project-input';
-    addProjBtn.textContent = '+';
-    addProjBtn.id = 'new-project';
-
-    document.querySelector('main').append( addProjInput, addProjBtn );
-
-    return addProjBtn;
-
-}
+})();
 
 function newProject (title) {
 
@@ -92,7 +102,6 @@ function newProject (title) {
 export {
 
     loadDOM,
-    addProjectInput,
     newProject
     
 };

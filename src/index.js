@@ -1,9 +1,9 @@
 import './reset.css';
 import './style.css';
-import { loadDOM, addProjectInput } from './load-dom.js';
+import { loadDOM } from './load-dom.js';
 import { project } from './projects.js';
 
-loadDOM();
+loadDOM.refresh();
 
 let projects = [];
 
@@ -11,10 +11,11 @@ document.querySelector('#new-project').addEventListener( 'click' , newProject );
 
 function newProject () {
 
-    const input = document.querySelector('#project-input');
+    const input = loadDOM.addProject.input;
     const nameInput = input.value;
     const inputPlaceholder = input.placeholder;
 
+    input.value = '';
     input.remove();
     document.querySelector('#new-project').remove();
 
@@ -36,7 +37,8 @@ function newProject () {
 
     } )
 
-    addProjectInput().addEventListener( 'click' , newProject );
+    loadDOM.addProject.load();
+    loadDOM.addProject.button.addEventListener( 'click' , newProject );
 
 }
 

@@ -71,6 +71,13 @@ function newTodo ( thisProj ) {
         
         }
 
+        thisTodo.dom.deleteBtn.addEventListener( 'click' , () => {
+
+            thisTodo.dom.bigContainer.remove();
+            thisProj.todos.splice(index,1);
+
+        });
+
         thisTodoInput.container.remove();
         thisProj.dom.container.appendChild(thisProj.dom.addTodoBtn);
 

@@ -162,10 +162,10 @@ const domThings = (() => {
         container.classList.add(priority);
     
         container.append(titleH, dateH, descriptionP);
-        bigContainer.append(container, editBtn, doneBtn, deleteBtn, deleteBtn);
+        bigContainer.append(container, doneBtn, editBtn, deleteBtn);
         project.appendChild(bigContainer);
 
-        return { bigContainer, container, editBtn };
+        return { bigContainer, container, doneBtn, editBtn, deleteBtn };
     
     }
 

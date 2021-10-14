@@ -53,7 +53,7 @@ main {
     height: auto;
 }
 
-.unimportant {
+.not-important {
     background-color: rgb(79, 170, 255);
 }
 
@@ -61,7 +61,7 @@ main {
     background-color: hsl(60, 100%, 67%);
 }
 
-.urgent {
+.very-important {
     background-color: rgb(255, 83, 83);
 }
 

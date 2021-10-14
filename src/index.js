@@ -1,9 +1,10 @@
 import './reset.css';
 import './style.css';
-import { loadDOM } from './load-dom.js';
-import { project } from './projects.js';
+import { domThings } from './load-dom';
+import { project } from './projects';
+import { todo } from './todos';
 
-loadDOM.refresh();
+domThings.newProjectInput.load();
 
 let projects = [];
 
@@ -11,7 +12,7 @@ document.querySelector('#new-project').addEventListener( 'click' , newProject );
 
 function newProject () {
 
-    const input = loadDOM.addProject.input;
+    const input = domThings.newProjectInput.input;
     const nameInput = input.value;
     const inputPlaceholder = input.placeholder;
 
@@ -23,10 +24,7 @@ function newProject () {
 
     const thisProj = projects[index];
 
-    thisProj.num = projects.length;
-    thisProj.dom.container.id = `project${projects.length}`;
-
-    thisProj.dom.addTodoBtn.addEventListener( 'click' , newTodo );
+    thisProj.dom.addTodoBtn.addEventListener( 'click' , () => newTodo( thisProj ) );
     thisProj.dom.deleteBtn.addEventListener( 'click' , () => {
 
         thisProj.dom.container.remove();
@@ -37,13 +35,59 @@ function newProject () {
 
     } )
 
-    loadDOM.addProject.load();
-    loadDOM.addProject.button.addEventListener( 'click' , newProject );
+    domThings.newProjectInput.load();
+    domThings.newProjectInput.button.addEventListener( 'click' , newProject );
 
 }
 
-function newTodo () {
+function newTodo ( thisProj ) {
 
-    
+    thisProj.dom.addTodoBtn.remove();
+    const thisTodoInput = domThings.todoInput();
+    thisTodoInput.load(thisProj.dom.container);
+
+    thisTodoInput.acceptBtn.addEventListener( 'click' , makeNewTodo );
+
+    function makeNewTodo () {
+
+        thisProj.todos.push(todo(
+            thisTodoInput.title.value,
+            thisTodoInput.date.value,
+            thisTodoInput.description.value,
+            thisTodoInput.priority.getInput(),
+            thisProj.dom.container
+        ));
+
+        const index = thisProj.todos.length-1;
+        const thisTodo = thisProj.todos[index];
+
+        thisTodo.dom.container.addEventListener( 'click', showHideDescription);
+
+        function showHideDescription () {
+
+            if (window.getSelection().type != 'Range') {
+                this.classList.toggle('expanded');
+            }
+        
+        }
+
+        thisTodoInput.container.remove();
+        thisProj.dom.container.appendChild(thisProj.dom.addTodoBtn);
+
+    }
+
+    thisTodoInput.cancelBtn.addEventListener( 'click' , () => {
+
+        thisTodoInput.container.remove();
+        thisProj.dom.container.appendChild(thisProj.dom.addTodoBtn);
+
+    });
+
+    thisTodoInput.deleteBtn.addEventListener( 'click' , () => {
+
+        thisTodoInput.container.remove();
+        thisProj.dom.container.appendChild(thisProj.dom.addTodoBtn);
+
+    });
 
 }

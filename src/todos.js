@@ -1,38 +1,23 @@
-// import { newTodo } from "./load-dom.js";
+import { domThings } from "./load-dom";
 
-// function todo (title, date, description, priority, project) {
+function todo (title, date, description, priority, project) {
 
-//     newTodo(title, date, description, priority, project);
 
-//     function setTitle (newTitle) {
-//         title = newTitle;
-//     }
+    function setInfo (newTitle, newDate, newDescription, newPriority) {
+        title = newTitle;
+        date = newDate;
+        description = newDescription;
+        priority = newPriority;
+    }
 
-//     function setDate (newDate) {
-//         date = newDate;
-//     }
+    const dom = domThings.newTodo(title, date, description, priority, project);
 
-//     function setDescription (newDescription) {
-//         description = newDescription;
-//     }
+    return { setInfo, dom };
 
-//     function setPriority (newPriority) {
-//         priority = newPriority;
-//     }
+}
 
-//     function setInfo (newTitle, newDate, newDescription, newPriority) {
-//         setTitle(newTitle);
-//         setDate(newDate);
-//         setDescription(newDescription);
-//         setPriority(newPriority);
-//     }
+export {
 
-//     return { setTitle, setDate, setDescription, setInfo };
+    todo
 
-// }
-
-// export {
-
-//     todo
-
-// }
+}

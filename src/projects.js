@@ -1,19 +1,13 @@
-import { newProject } from './load-dom.js';
+import { domThings } from './load-dom';
 
 function project ( name ) {
 
-    let num;
-
-    const dom = newProject(name);
+    const dom = domThings.newProject(name);
 
     let todos = [];
 
-    return { num, dom, todos };
+    return { dom, todos };
 
 }
 
-export {
-
-    project
-
-}
+export { project };

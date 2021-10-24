@@ -1,4 +1,5 @@
 import { domThings } from "./dom-things";
+import { format, add } from "date-fns";
 
 function todo(title, date, description, priority, projectKey) {
     const dom = domThings.todo(title, date, description, priority, projectKey);
@@ -32,7 +33,7 @@ function todo(title, date, description, priority, projectKey) {
         const todoEdition = domThings.todoInput();
         todoEdition.load(dom.bigContainer);
         todoEdition.title.value = title;
-        todoEdition.date.value = date;
+        todoEdition.date.value = format(new Date(date), 'yyyy-MM-dd');
         todoEdition.description.value = description;
         switch(priority) {
             case 'not-important':
@@ -48,7 +49,7 @@ function todo(title, date, description, priority, projectKey) {
 
         todoEdition.acceptBtn.addEventListener('click', () => {
             title = todoEdition.title.value;
-            date = todoEdition.date.value;
+            date = format(add(new Date(todoEdition.date.value), {days: 1}), 'd / MMM / y (E)');
             description = todoEdition.description.value;
             priority = todoEdition.priority.getInput();
             dom.setContent(
@@ -94,7 +95,7 @@ function editNewTodo(todosContainer, addTodoButton, projectKey) {
     todoEdition.acceptBtn.addEventListener('click', () => {
         createTodo(
             todoEdition.title.value,
-            todoEdition.date.value,
+            format(add(new Date(todoEdition.date.value), {days: 1}), 'd / MMM / y (E)'),
             todoEdition.description.value,
             todoEdition.priority.getInput(),
             projectKey

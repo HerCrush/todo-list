@@ -43,6 +43,7 @@ const domThings = (() => {
         const container = document.createElement('div');
         const title = document.createElement('input');
         const date = document.createElement('input');
+        date.setAttribute('type', 'date');
         const description = document.createElement('input');
         const priority = (() => {
             const notImportant = document.createElement('input');
@@ -76,7 +77,6 @@ const domThings = (() => {
         const deleteBtn = document.createElement('button');
         const load = (projContainer) => {
             title.placeholder = 'Title...';
-            date.placeholder = 'dd/mm/yyyy';
             description.placeholder = 'Description...';
             acceptBtn.textContent = '✓';
             cancelBtn.textContent = 'cancel';

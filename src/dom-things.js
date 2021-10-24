@@ -1,58 +1,50 @@
 const domThings = (() => {
 
-    const newProjectInput = (() => {
-
+    const projectInput = (() => {
         const input = document.createElement('input');
         const button = document.createElement('button');
-    
         const load = () => {
-    
             input.placeholder = 'New Project';
             input.id = 'project-input';
             button.textContent = '+';
             button.id = 'new-project';
-    
             document.querySelector('main').append( input, button );
-    
         }
     
         return { input, button, load };
-    
     })();
 
-    function newProject (title) {
-
+    function project (title, key) {
         const container = document.createElement('div');
         const header = document.createElement('h3');
         const deleteBtn = document.createElement('button');
+        const todosContainer = document.createElement('div');
         const addTodoBtn = document.createElement('button');
         const navBtn = document.createElement('button');
-    
-        header.textContent = title;
-        deleteBtn.textContent = 'X';
-        addTodoBtn.textContent = 'New Task';
-        navBtn.textContent = title;
-    
-        container.classList.add('project');
-        deleteBtn.classList.add('delete-project');
-        addTodoBtn.classList.add('new-todo');
-    
-        container.append( header, deleteBtn, addTodoBtn );
-        document.querySelector('main').appendChild(container);
-        document.querySelector('nav').appendChild(navBtn);
-    
-        return { container, deleteBtn, addTodoBtn, navBtn };
-    
+        function load() {
+            header.textContent = title;
+            deleteBtn.textContent = 'X';
+            addTodoBtn.textContent = 'New Task';
+            navBtn.textContent = title;
+            container.classList.add('project');
+            deleteBtn.classList.add('delete-project');
+            todosContainer.dataset.project = key;
+            todosContainer.classList.add('todos-container');
+            addTodoBtn.classList.add('new-todo');
+            container.append( header, deleteBtn, todosContainer, addTodoBtn );
+            document.querySelector('#projects-container').appendChild(container);
+            document.querySelector('nav').appendChild(navBtn);
+        }
+
+        return { container, deleteBtn, todosContainer, addTodoBtn, navBtn, load };
     }
 
-    function todoInput () {
-
+    function todoInput() {
         const container = document.createElement('div');
         const title = document.createElement('input');
         const date = document.createElement('input');
         const description = document.createElement('input');
         const priority = (() => {
-
             const notImportant = document.createElement('input');
             const important = document.createElement('input');
             const veryImportant = document.createElement('input');
@@ -62,7 +54,6 @@ const domThings = (() => {
             important.setAttribute('name', 'priority');
             veryImportant.setAttribute('type', 'radio');
             veryImportant.setAttribute('name', 'priority');
-
             function getInput () {
                 switch(true) {
                     case notImportant.checked:
@@ -78,14 +69,12 @@ const domThings = (() => {
             }
 
             return { notImportant, important, veryImportant, getInput };
-
         })();
+
         const acceptBtn = document.createElement('button');
         const cancelBtn = document.createElement('button');
         const deleteBtn = document.createElement('button');
-
         const load = (projContainer) => {
-
             title.placeholder = 'Title...';
             date.placeholder = 'dd/mm/yyyy';
             description.placeholder = 'Description...';
@@ -95,16 +84,13 @@ const domThings = (() => {
             priority.notImportant.value = 'not-important';
             priority.important.value = 'important';
             priority.veryImportant.value = 'very-important';
-
             title.classList.add('todo-title');
             date.classList.add('todo-date');
             description.classList.add('todo-description');
             priority.notImportant.classList.add('priority');
             priority.important.classList.add('priority');
             priority.veryImportant.classList.add('priority');
-
             container.append(
-
                 title,
                 date,
                 description,
@@ -114,14 +100,12 @@ const domThings = (() => {
                 acceptBtn,
                 cancelBtn,
                 deleteBtn
-
             );
-            projContainer.appendChild(container);
 
+            projContainer.appendChild(container);
         };
 
         return {
-
             container,
             title,
             date,
@@ -131,13 +115,11 @@ const domThings = (() => {
             cancelBtn,
             deleteBtn,
             load
-
         }
 
     };
 
-    function newTodo (title, date, description, priority, project) {
-
+    function todo(title, date, description, priority, projectKey) {
         const bigContainer = document.createElement('div');
         const container = document.createElement('div');
         const titleH = document.createElement('h4');
@@ -146,31 +128,29 @@ const domThings = (() => {
         const doneBtn = document.createElement('button');
         const editBtn = document.createElement('button');
         const deleteBtn = document.createElement('button');
-    
-        titleH.textContent = title;
-        dateH.textContent = date;
-        descriptionP.textContent = description;
-        doneBtn.textContent = 'DONE';
-        editBtn.textContent = 'EDIT';
-        deleteBtn.textContent = 'DELETE';
-    
-        bigContainer.classList.add('task');
-        container.classList.add('task-card');
-        doneBtn.classList.add('task-done');
-        editBtn.classList.add('task-edit');
-        deleteBtn.classList.add('task-delete');
-        container.classList.add(priority);
-    
-        container.append(titleH, dateH, descriptionP);
-        bigContainer.append(container, doneBtn, editBtn, deleteBtn);
-        project.appendChild(bigContainer);
+        function load() {
+            titleH.textContent = title;
+            dateH.textContent = date;
+            descriptionP.textContent = description;
+            doneBtn.textContent = 'DONE';
+            editBtn.textContent = 'EDIT';
+            deleteBtn.textContent = 'DELETE';
+            bigContainer.classList.add('task');
+            container.classList.add('task-card');
+            doneBtn.classList.add('task-done');
+            doneBtn.dataset.done = false;
+            editBtn.classList.add('task-edit');
+            deleteBtn.classList.add('task-delete');
+            container.classList.add(priority);
+            container.append(titleH, dateH, descriptionP);
+            bigContainer.append(container, doneBtn, editBtn, deleteBtn);
+            document.querySelector(`div[data-project="${projectKey}"]`).appendChild(bigContainer);
+        }
 
-        return { bigContainer, container, doneBtn, editBtn, deleteBtn };
-    
+        return { bigContainer, container, doneBtn, editBtn, deleteBtn, load };
     }
 
-    return { newProjectInput, newProject, todoInput, newTodo };
-    
+    return { projectInput, project, todoInput, todo };
 })();
 
 export { domThings };

@@ -1,100 +1,70 @@
 import './reset.css';
 import './style.css';
-import { domThings } from './load-dom';
-import { project } from './projects';
+import { domThings } from './dom-things';
+import { createProject } from './projects';
 import { todo } from './todos';
 
-domThings.newProjectInput.load();
+domThings.projectInput.load();
+domThings.projectInput.button.addEventListener( 'click' , () => {
+    createProject(domThings.projectInput.input.value || domThings.projectInput.input.placeholder)
+    domThings.projectInput.input.value = '';
+});
 
-let projects = [];
+// function newTodo ( thisProj ) {
 
-document.querySelector('#new-project').addEventListener( 'click' , newProject );
+//     thisProj.dom.addTodoBtn.remove();
+//     const thisTodoInput = domThings.todoInput();
+//     thisTodoInput.load(thisProj.dom.container);
 
-function newProject () {
+//     thisTodoInput.acceptBtn.addEventListener( 'click' , makeNewTodo );
 
-    const input = domThings.newProjectInput.input;
-    const nameInput = input.value;
-    const inputPlaceholder = input.placeholder;
+//     function makeNewTodo () {
 
-    input.value = '';
-    input.remove();
-    document.querySelector('#new-project').remove();
+//         thisProj.todos.push(todo(
+//             thisTodoInput.title.value,
+//             thisTodoInput.date.value,
+//             thisTodoInput.description.value,
+//             thisTodoInput.priority.getInput(),
+//             thisProj.dom.container
+//         ));
 
-    const index = projects.push( project( nameInput || inputPlaceholder ) )-1;
+//         const index = thisProj.todos.length-1;
+//         const thisTodo = thisProj.todos[index];
 
-    const thisProj = projects[index];
+//         thisTodo.dom.container.addEventListener( 'click', showHideDescription);
 
-    thisProj.dom.addTodoBtn.addEventListener( 'click' , () => newTodo( thisProj ) );
-    thisProj.dom.deleteBtn.addEventListener( 'click' , () => {
+//         function showHideDescription () {
 
-        thisProj.dom.container.remove();
-
-        thisProj.dom.navBtn.remove();
-
-        projects.splice(index,1);
-
-    } )
-
-    domThings.newProjectInput.load();
-    domThings.newProjectInput.button.addEventListener( 'click' , newProject );
-
-}
-
-function newTodo ( thisProj ) {
-
-    thisProj.dom.addTodoBtn.remove();
-    const thisTodoInput = domThings.todoInput();
-    thisTodoInput.load(thisProj.dom.container);
-
-    thisTodoInput.acceptBtn.addEventListener( 'click' , makeNewTodo );
-
-    function makeNewTodo () {
-
-        thisProj.todos.push(todo(
-            thisTodoInput.title.value,
-            thisTodoInput.date.value,
-            thisTodoInput.description.value,
-            thisTodoInput.priority.getInput(),
-            thisProj.dom.container
-        ));
-
-        const index = thisProj.todos.length-1;
-        const thisTodo = thisProj.todos[index];
-
-        thisTodo.dom.container.addEventListener( 'click', showHideDescription);
-
-        function showHideDescription () {
-
-            if (window.getSelection().type != 'Range') {
-                this.classList.toggle('expanded');
-            }
+//             if (window.getSelection().type != 'Range') {
+//                 this.classList.toggle('expanded');
+//             }
         
-        }
+//         }
 
-        thisTodo.dom.deleteBtn.addEventListener( 'click' , () => {
+//         thisTodo.dom.deleteBtn.addEventListener( 'click' , () => {
 
-            thisTodo.dom.bigContainer.remove();
-            thisProj.todos.splice(index,1);
+//             thisTodo.dom.bigContainer.remove();
+//             thisProj.todos.splice(index,1);
 
-        });
+//         });
 
-        thisTodoInput.container.remove();
-        thisProj.dom.container.appendChild(thisProj.dom.addTodoBtn);
+//         thisTodoInput.container.remove();
+//         thisProj.dom.container.appendChild(thisProj.dom.addTodoBtn);
 
-    }
+//     }
 
-    thisTodoInput.cancelBtn.addEventListener( 'click' , () => {
+//     thisTodoInput.cancelBtn.addEventListener( 'click' , () => {
 
-        thisTodoInput.container.remove();
-        thisProj.dom.container.appendChild(thisProj.dom.addTodoBtn);
+//         thisTodoInput.container.remove();
+//         thisProj.dom.container.appendChild(thisProj.dom.addTodoBtn);
 
-    });
+//     });
 
-    thisTodoInput.deleteBtn.addEventListener( 'click' , () => {
+//     thisTodoInput.deleteBtn.addEventListener( 'click' , () => {
 
-        thisTodoInput.container.remove();
-        thisProj.dom.container.appendChild(thisProj.dom.addTodoBtn);
+//         thisTodoInput.container.remove();
+//         thisProj.dom.container.appendChild(thisProj.dom.addTodoBtn);
 
-    });
+//     });
 
-}
+// }

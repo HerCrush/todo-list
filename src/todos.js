@@ -4,6 +4,11 @@ function todo(title, date, description, priority, projectKey) {
     const dom = domThings.todo(title, date, description, priority, projectKey);
     function load() {
         dom.load();
+        dom.container.addEventListener('click', () => {
+            if (window.getSelection().type != 'Range') {
+                dom.container.classList.toggle('expanded');
+            }
+        });
         dom.doneBtn.addEventListener('click', toggleDone);
         dom.editBtn.addEventListener('click', editTodo);
         dom.deleteBtn.addEventListener('click', deleteTodo);

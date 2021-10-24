@@ -128,10 +128,15 @@ const domThings = (() => {
         const doneBtn = document.createElement('button');
         const editBtn = document.createElement('button');
         const deleteBtn = document.createElement('button');
+        function setContent(newTitle, newDate, newDescription, newPriority) {
+            titleH.textContent = newTitle;
+            dateH.textContent = newDate;
+            descriptionP.textContent = newDescription;
+            container.dataset.priority = newPriority;
+        }
+
         function load() {
-            titleH.textContent = title;
-            dateH.textContent = date;
-            descriptionP.textContent = description;
+            setContent(title, date, description, priority);
             doneBtn.textContent = 'DONE';
             editBtn.textContent = 'EDIT';
             deleteBtn.textContent = 'DELETE';
@@ -141,13 +146,12 @@ const domThings = (() => {
             doneBtn.dataset.done = false;
             editBtn.classList.add('task-edit');
             deleteBtn.classList.add('task-delete');
-            container.classList.add(priority);
             container.append(titleH, dateH, descriptionP);
             bigContainer.append(container, doneBtn, editBtn, deleteBtn);
             document.querySelector(`div[data-project="${projectKey}"]`).appendChild(bigContainer);
         }
 
-        return { bigContainer, container, doneBtn, editBtn, deleteBtn, load };
+        return { bigContainer, container, doneBtn, editBtn, deleteBtn, setContent, load };
     }
 
     return { projectInput, project, todoInput, todo };

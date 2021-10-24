@@ -57,15 +57,15 @@ main {
     height: auto;
 }
 
-.not-important {
+div[data-priority="not-important"] {
     background-color: rgb(79, 170, 255);
 }
 
-.important {
+div[data-priority="important"] {
     background-color: hsl(60, 100%, 67%);
 }
 
-.very-important {
+div[data-priority="very-important"] {
     background-color: rgb(255, 83, 83);
 }
 

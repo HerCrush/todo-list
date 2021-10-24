@@ -20,7 +20,54 @@ function todo(title, date, description, priority, projectKey) {
     }
 
     function editTodo() {
-        
+        dom.container.classList.add('hidden');
+        dom.doneBtn.classList.add('hidden');
+        dom.editBtn.classList.add('hidden');
+        dom.deleteBtn.classList.add('hidden');
+        const todoEdition = domThings.todoInput();
+        todoEdition.load(dom.bigContainer);
+        todoEdition.title.value = title;
+        todoEdition.date.value = date;
+        todoEdition.description.value = description;
+        switch(priority) {
+            case 'not-important':
+                todoEdition.priority.notImportant.checked = true;
+                break;
+            case 'important':
+                todoEdition.priority.important.checked = true;
+                break;
+            case 'very-important':
+                todoEdition.priority.veryImportant.checked = true;
+                break;
+        }
+
+        todoEdition.acceptBtn.addEventListener('click', () => {
+            title = todoEdition.title.value;
+            date = todoEdition.date.value;
+            description = todoEdition.description.value;
+            priority = todoEdition.priority.getInput();
+            dom.setContent(
+                title,
+                date,
+                description,
+                priority
+            );
+            todoEdition.container.remove();
+            dom.container.classList.remove('hidden');
+            dom.doneBtn.classList.remove('hidden');
+            dom.editBtn.classList.remove('hidden');
+            dom.deleteBtn.classList.remove('hidden');
+        });
+
+        todoEdition.cancelBtn.addEventListener('click', () => {
+            todoEdition.container.remove();
+            dom.container.classList.remove('hidden');
+            dom.doneBtn.classList.remove('hidden');
+            dom.editBtn.classList.remove('hidden');
+            dom.deleteBtn.classList.remove('hidden');
+        });
+
+        todoEdition.deleteBtn.addEventListener('click', deleteTodo);
     }
     
     function deleteTodo() {

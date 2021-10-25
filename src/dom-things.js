@@ -142,6 +142,7 @@ const domThings = (() => {
             deleteBtn.textContent = 'DELETE';
             bigContainer.classList.add('task');
             container.classList.add('task-card');
+            container.classList.add('collapsed');
             doneBtn.classList.add('task-done');
             doneBtn.dataset.done = false;
             editBtn.classList.add('task-edit');

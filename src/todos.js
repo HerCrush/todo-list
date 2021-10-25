@@ -1,13 +1,26 @@
 import { domThings } from "./dom-things";
 import { format, add } from "date-fns";
+import { dataStorage } from "./data-storage";
+
+let todos = [];
+function updateTodos() {
+    todos.forEach((e, index) => e.setKey(index));
+    dataStorage.removeTodo(todos.length);
+    todos.forEach(e => dataStorage.storeTodo(e.data));
+}
 
 function todo(title, date, description, priority, projectKey) {
+    let key = todos.length;
+    function setKey(newKey) {
+        key = newKey;
+    }
+
     const dom = domThings.todo(title, date, description, priority, projectKey);
     function load() {
         dom.load();
         dom.container.addEventListener('click', () => {
-            if (window.getSelection().type != 'Range') {
-                dom.container.classList.toggle('expanded');
+            if ((window.getSelection().type != 'Range') && (description !== '')) {
+                dom.container.classList.toggle('collapsed');
             }
         });
         dom.doneBtn.addEventListener('click', toggleDone);
@@ -33,7 +46,9 @@ function todo(title, date, description, priority, projectKey) {
         const todoEdition = domThings.todoInput();
         todoEdition.load(dom.bigContainer);
         todoEdition.title.value = title;
-        todoEdition.date.value = format(new Date(date), 'yyyy-MM-dd');
+        if(date !== ''){
+            todoEdition.date.value = format(new Date(date), 'yyyy-MM-dd');
+        }
         todoEdition.description.value = description;
         switch(priority) {
             case 'not-important':
@@ -49,9 +64,15 @@ function todo(title, date, description, priority, projectKey) {
 
         todoEdition.acceptBtn.addEventListener('click', () => {
             title = todoEdition.title.value;
-            date = format(add(new Date(todoEdition.date.value), {days: 1}), 'd / MMM / y (E)');
+            if(todoEdition.date.value !== '') {
+                date = format(add(new Date(todoEdition.date.value), {days: 1}), 'd / MMM / y (E)');
+            }
+            else {
+                date = '';
+            }
             description = todoEdition.description.value;
             priority = todoEdition.priority.getInput();
+            dataStorage.storeTodo(data);
             dom.setContent(
                 title,
                 date,
@@ -78,9 +99,13 @@ function todo(title, date, description, priority, projectKey) {
     
     function deleteTodo() {
         dom.bigContainer.remove();
+        todos.splice(key, 1);
+        updateTodos();
     }
 
-    return { load, toggleDone, getIsDone };
+    const data = { key, title, date, description, priority, isDone, projectKey };
+
+    return { setKey, load, toggleDone, getIsDone, data };
 }
 
 function editNewTodo(todosContainer, addTodoButton, projectKey) {
@@ -93,9 +118,17 @@ function editNewTodo(todosContainer, addTodoButton, projectKey) {
     }
 
     todoEdition.acceptBtn.addEventListener('click', () => {
+        let dateInput;
+        if(todoEdition.date.value !== '') {
+            dateInput = format(add(new Date(todoEdition.date.value), {days: 1}), 'd / MMM / y (E)');
+        }
+        else {
+            dateInput = '';
+        }
+
         createTodo(
             todoEdition.title.value,
-            format(add(new Date(todoEdition.date.value), {days: 1}), 'd / MMM / y (E)'),
+            dateInput,
             todoEdition.description.value,
             todoEdition.priority.getInput(),
             projectKey
@@ -110,6 +143,8 @@ function editNewTodo(todosContainer, addTodoButton, projectKey) {
 function createTodo(title, date, description, priority, projectKey) {
     const thisTodo = todo(title, date, description, priority, projectKey);
     thisTodo.load();
+    todos.push(thisTodo);
+    dataStorage.storeTodo(thisTodo.data);
 }
 
 export {

@@ -35,9 +35,8 @@ main {
     justify-content: space-between;
     background-color: rgb(206, 206, 206);
     width: 60vw;
-    height: 1em;
-    padding: 20px;
-    overflow: hidden;
+    padding: 10px 20px;
+    line-height: 300%;
 }
 
 .task button {
@@ -46,15 +45,14 @@ main {
 
 .task-card p {
     width: 60vw;
-    margin-top: 1.5em;
 }
 
 .task-card[data-done="true"] {
     background-color: rgb(140, 255, 140);
 }
 
-.expanded {
-    height: auto;
+.collapsed p {
+    display: none;
 }
 
 div[data-priority="not-important"] {

@@ -3,12 +3,6 @@ import { editNewTodo } from './todos';
 import { dataStorage } from './data-storage';
 
 let projects = [];
-function updateProjects() {
-    projects.forEach((e, index) => e.setKey(index));
-    dataStorage.removeProject(projects.length);
-    projects.forEach(e => dataStorage.storeProject(e.data));
-}
-
 function project(name) {
     let key = projects.length;
     function getKey() {
@@ -31,11 +25,9 @@ function project(name) {
     function deleteProject() {
         dom.container.remove();
         dom.navBtn.remove();
-        projects.splice(key, 1);
-        updateProjects();
     }
 
-    const data = { key, name };
+    const data = { key, name }; //find a way to change data.key when project.key does
 
     return { getKey, setKey, load, data };
 }

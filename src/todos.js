@@ -3,12 +3,6 @@ import { format, add } from "date-fns";
 import { dataStorage } from "./data-storage";
 
 let todos = [];
-function updateTodos() {
-    todos.forEach((e, index) => e.setKey(index));
-    dataStorage.removeTodo(todos.length);
-    todos.forEach(e => dataStorage.storeTodo(e.data));
-}
-
 function todo(title, date, description, priority, projectKey) {
     let key = todos.length;
     function setKey(newKey) {
@@ -99,8 +93,6 @@ function todo(title, date, description, priority, projectKey) {
     
     function deleteTodo() {
         dom.bigContainer.remove();
-        todos.splice(key, 1);
-        updateTodos();
     }
 
     const data = { key, title, date, description, priority, isDone, projectKey };
@@ -140,14 +132,16 @@ function editNewTodo(todosContainer, addTodoButton, projectKey) {
     todoEdition.deleteBtn.addEventListener('click', endEditing);
 }
 
-function createTodo(title, date, description, priority, projectKey) {
+function createTodo(title, date, description, priority, projectKey, isDone = false) {
     const thisTodo = todo(title, date, description, priority, projectKey);
     thisTodo.load();
+    if(isDone) thisTodo.toggleDone();
     todos.push(thisTodo);
     dataStorage.storeTodo(thisTodo.data);
 }
 
 export {
     todo,
-    editNewTodo
+    editNewTodo,
+    createTodo
 };

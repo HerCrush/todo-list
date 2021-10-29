@@ -1,12 +1,27 @@
 import { domThings } from "./dom-things";
+import { addTodoToProject } from "./projects";
 import { format, add } from "date-fns";
 import { dataStorage } from "./data-storage";
 
 let todos = [];
+function updateTodosKeys() {
+    todos.forEach((todo, index) => {
+        todo.setKey(index);
+        dataStorage.storeTodo(todo.data);
+    });
+}
+
 function todo(title, date, description, priority, projectKey) {
     let key = todos.length;
+    let isDone = false;
+    const data = { key, title, date, description, priority, isDone, projectKey };
+    function getKey() {
+        return key;
+    }
+
     function setKey(newKey) {
         key = newKey;
+        data.key = newKey;
     }
 
     const dom = domThings.todo(title, date, description, priority, projectKey);
@@ -22,9 +37,9 @@ function todo(title, date, description, priority, projectKey) {
         dom.deleteBtn.addEventListener('click', deleteTodo);
     }
 
-    let isDone = false;
     function toggleDone() {
         isDone = !isDone;
+        data.isDone = isDone;
         dom.container.dataset.done = isDone;
     }
 
@@ -57,15 +72,19 @@ function todo(title, date, description, priority, projectKey) {
         }
 
         todoEdition.acceptBtn.addEventListener('click', () => {
-            title = todoEdition.title.value;
+            let newDate;
             if(todoEdition.date.value !== '') {
-                date = format(add(new Date(todoEdition.date.value), {days: 1}), 'd / MMM / y (E)');
+                newDate = format(add(new Date(todoEdition.date.value), {days: 1}), 'd / MMM / y (E)');
             }
             else {
-                date = '';
+                newDate = '';
             }
-            description = todoEdition.description.value;
-            priority = todoEdition.priority.getInput();
+            setInfo(
+                todoEdition.title.value,
+                newDate,
+                description = todoEdition.description.value,
+                todoEdition.priority.getInput()
+            );
             dataStorage.storeTodo(data);
             dom.setContent(
                 title,
@@ -93,11 +112,27 @@ function todo(title, date, description, priority, projectKey) {
     
     function deleteTodo() {
         dom.bigContainer.remove();
+        todos.forEach(todo => dataStorage.removeTodo(todo.getKey()));
+        todos.splice(key, 1);
+        updateTodosKeys();
     }
 
-    const data = { key, title, date, description, priority, isDone, projectKey };
+    function setProjectKey(newProjectKey) {
+        projectKey = newProjectKey;
+    }
 
-    return { setKey, load, toggleDone, getIsDone, data };
+    function setInfo(newTitle, newDate, newDescription, newPriority) {
+        title = newTitle;
+        date = newDate;
+        description = newDescription;
+        priority = newPriority;
+        data.title = newTitle;
+        data.date = newDate;
+        data.description = newDescription;
+        data.priority = newPriority;
+    }
+
+    return { getKey, setKey, load, toggleDone, getIsDone, deleteTodo, setProjectKey, data };
 }
 
 function editNewTodo(todosContainer, addTodoButton, projectKey) {
@@ -134,6 +169,7 @@ function editNewTodo(todosContainer, addTodoButton, projectKey) {
 
 function createTodo(title, date, description, priority, projectKey, isDone = false) {
     const thisTodo = todo(title, date, description, priority, projectKey);
+    addTodoToProject(projectKey, thisTodo);
     thisTodo.load();
     if(isDone) thisTodo.toggleDone();
     todos.push(thisTodo);

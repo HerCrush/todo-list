@@ -30,6 +30,12 @@ const dataStorage = (() => {
         }
     }
 
+    function removeTodo(key) {
+        localStorage.removeItem(`todo${key}`);
+        todoCounter -= 1;
+        localStorage.setItem('todoCounter', todoCounter);
+    }
+
     function loadStoredData() {
         projectCounter = JSON.parse(localStorage.getItem('projectCounter'));
         todoCounter = JSON.parse(localStorage.getItem('todoCounter'));
@@ -43,7 +49,7 @@ const dataStorage = (() => {
         }
     }
 
-    return { storeProject, removeProject, storeTodo, loadStoredData };
+    return { storeProject, removeProject, storeTodo, removeTodo, loadStoredData };
 })();
 
 export { dataStorage };

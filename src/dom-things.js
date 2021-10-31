@@ -16,22 +16,27 @@ const domThings = (() => {
 
     function project (title, key) {
         const container = document.createElement('div');
+        const headDiv = document.createElement('div');
         const header = document.createElement('h3');
         const deleteBtn = document.createElement('button');
         const todosContainer = document.createElement('div');
         const addTodoBtn = document.createElement('button');
-        const navBtn = document.createElement('button');
+        const navBtn = document.createElement('a');
         function load() {
+            headDiv.classList.add('project-header');
             header.textContent = title;
-            deleteBtn.textContent = 'X';
-            addTodoBtn.textContent = 'New Task';
+            deleteBtn.textContent = '+';
+            addTodoBtn.textContent = '+';
             navBtn.textContent = title;
             container.classList.add('project');
+            container.id = `project${key}`;
             deleteBtn.classList.add('delete-project');
             todosContainer.dataset.project = key;
             todosContainer.classList.add('todos-container');
             addTodoBtn.classList.add('new-todo');
-            container.append( header, deleteBtn, todosContainer, addTodoBtn );
+            navBtn.setAttribute('href', `#project${key}`);
+            headDiv.append(header, deleteBtn);
+            container.append(headDiv, todosContainer, addTodoBtn);
             document.querySelector('#projects-container').appendChild(container);
             document.querySelector('nav').appendChild(navBtn);
         }

@@ -40,6 +40,7 @@ function todo(title, date, description, priority, projectKey) {
     function toggleDone() {
         isDone = !isDone;
         data.isDone = isDone;
+        dataStorage.storeTodo(data);
         dom.container.dataset.done = isDone;
     }
 
@@ -119,6 +120,7 @@ function todo(title, date, description, priority, projectKey) {
 
     function setProjectKey(newProjectKey) {
         projectKey = newProjectKey;
+        data.projectKey = newProjectKey;
     }
 
     function setInfo(newTitle, newDate, newDescription, newPriority) {
@@ -167,7 +169,7 @@ function editNewTodo(todosContainer, addTodoButton, projectKey) {
     todoEdition.deleteBtn.addEventListener('click', endEditing);
 }
 
-function createTodo(title, date, description, priority, projectKey, isDone = false) {
+function createTodo(title, date, description, priority, projectKey, isDone) {
     const thisTodo = todo(title, date, description, priority, projectKey);
     addTodoToProject(projectKey, thisTodo);
     thisTodo.load();

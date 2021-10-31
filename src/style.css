@@ -1,46 +1,99 @@
+@font-face {
+    font-family: "Gothic";
+    src: url("./Zen_Kaku_Gothic_Antique/ZenKakuGothicAntique-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Gothic bold";
+    src: url("./Zen_Kaku_Gothic_Antique/ZenKakuGothicAntique-Bold.ttf");
+}
+
 body {
     display: grid;
     grid-template-areas: 
         "a a"
         "b c";
-    grid-template-columns: 10vw 1fr;
+    grid-template-columns: 15vw 1fr;
+    font-family: "Gothic";
+    font-size: 14pt;
 }
 
 #title {
+    font-family: "Gothic";
+    font-size: 28pt;
+    letter-spacing: 0.12em;
     grid-area: a;
     margin: auto;
+    padding: 2%;
 }
 
 nav {
     grid-area: b;
-    background-color: rgb(255, 149, 149);
+    display: flex;
+    flex-direction: column;
+    padding: 25% 20%;
+    border-right: solid 1px hsl(0, 0%, 70%);
+}
+
+nav a {
+    margin-top: 15%;
 }
 
 main {
     grid-area: c;
-    background-color: rgb(145, 145, 255);
-    padding: 20px;
+    padding: 1%;
+    padding-left: 4%;
+}
+
+#project-input {
+    margin: 3.5% 0%;
+}
+
+.project {
+    margin: 3% 0%;
+}
+
+.project-header {
+    display: flex;
+    margin: 2% 0%;
+}
+
+h3 {
+    font-family: "Gothic bold";
+    font-size: 20pt;
+}
+
+.delete-project {
+    font-family: "Gothic bold";
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    font-size: 16pt;
+    rotate: 45deg;
+    margin-left: 1%;
 }
 
 .task {
     display: flex;
-    background-color: rgb(255, 215, 142);
     width: 80vw;
-    padding: 20px;
+    padding: 1% 0%;
 }
 
 .task-card {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    background-color: rgb(206, 206, 206);
+    background-color: hsl(0, 0%, 97%);
+    border: solid 1px hsl(0, 0%, 70%);
+    border-radius: 20px;
     width: 60vw;
-    padding: 10px 20px;
+    padding: 0px 20px;
     line-height: 300%;
 }
 
 .task button {
     height: 2em;
+    margin: 1% 0% 1% 2%;
 }
 
 .task-card p {
@@ -48,7 +101,8 @@ main {
 }
 
 .task-card[data-done="true"] {
-    background-color: rgb(140, 255, 140);
+    background-color: hsl(120, 100%, 90%);
+    border-color: hsl(120, 100%, 50%);
 }
 
 .collapsed p {
@@ -56,15 +110,35 @@ main {
 }
 
 div[data-priority="not-important"] {
-    background-color: rgb(79, 170, 255);
+    background-color: hsl(209, 100%, 90%);
+    border-color: hsl(209, 100%, 50%);
 }
 
 div[data-priority="important"] {
-    background-color: hsl(60, 100%, 67%);
+    background-color: hsl(60, 100%, 90%);
+    border-color: hsl(60, 100%, 50%);
 }
 
 div[data-priority="very-important"] {
-    background-color: rgb(255, 83, 83);
+    background-color: hsl(0, 100%, 90%);
+    border-color: hsl(0, 100%, 50%);
+}
+
+.new-todo {
+    font-family: "Gothic bold";
+    font-size: 18pt;
+    color: hsl(0, 0%, 50%);
+    line-height: 100%;
+    margin: 1% 0%;
+    width: 1.5em;
+    height: 1.5em;
+    background-color: hsl(0, 0%, 97%);
+    border: solid 1px hsl(0, 0%, 70%);
+    border-radius: 50%;
+}
+
+.new-todo:hover {
+    background-color: hsl(0, 0%, 92%);;
 }
 
 .hidden {

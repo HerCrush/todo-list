@@ -15,9 +15,10 @@ function updateProjectsKeys() {
 }
 
 function project(name) {
-    const todos = [];
+    const todos = [];  // this aren't actual references to the todos but copies so any changes made to them don't actually affect the real ones fuuuuuuuuuuuuuuuuuuuuuuu
     let key = projects.length;
     const data = { key, name };
+    const dom = domThings.project(name, key);
     function getKey() {
         return key;
     }
@@ -26,9 +27,10 @@ function project(name) {
         key = newKey;
         data.key = newKey;
         todos.forEach(todo => todo.setProjectKey(newKey));
+        dom.container.id = `project${newKey}`;
+        dom.navBtn.setAttribute('href', `#project${newKey}`);
     }
 
-    const dom = domThings.project(name, key);
     function load() {
         dom.load();
         dom.deleteBtn.addEventListener('click', deleteProject);

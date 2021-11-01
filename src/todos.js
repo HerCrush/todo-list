@@ -1,5 +1,4 @@
 import { domThings } from "./dom-things";
-import { addTodoToProject } from "./projects";
 import { format, add } from "date-fns";
 import { dataStorage } from "./data-storage";
 
@@ -8,6 +7,21 @@ function updateTodosKeys() {
     todos.forEach((todo, index) => {
         todo.setKey(index);
         dataStorage.storeTodo(todo.data);
+    });
+}
+
+function deleteTodosOfProject(projectKey) {
+    todos.forEach(todo => {
+        const thisTodoProjectKey = todo.getProjectKey();
+        if(thisTodoProjectKey === projectKey) {
+            todo.deleteTodo();
+        }
+    });
+    todos.forEach(todo => {
+        const thisTodoProjectKey = todo.getProjectKey();
+        if(thisTodoProjectKey > projectKey) {
+            todo.setProjectKey((thisTodoProjectKey - 1));
+        }
     });
 }
 
@@ -118,9 +132,14 @@ function todo(title, date, description, priority, projectKey) {
         updateTodosKeys();
     }
 
+    function getProjectKey() {
+        return projectKey;
+    }
+
     function setProjectKey(newProjectKey) {
         projectKey = newProjectKey;
         data.projectKey = newProjectKey;
+        dataStorage.storeTodo(data);
     }
 
     function setInfo(newTitle, newDate, newDescription, newPriority) {
@@ -134,7 +153,7 @@ function todo(title, date, description, priority, projectKey) {
         data.priority = newPriority;
     }
 
-    return { getKey, setKey, load, toggleDone, getIsDone, deleteTodo, setProjectKey, data };
+    return { getKey, setKey, load, toggleDone, getIsDone, deleteTodo, getProjectKey, setProjectKey, data };
 }
 
 function editNewTodo(todosContainer, addTodoButton, projectKey) {
@@ -170,16 +189,16 @@ function editNewTodo(todosContainer, addTodoButton, projectKey) {
 }
 
 function createTodo(title, date, description, priority, projectKey, isDone) {
-    const thisTodo = todo(title, date, description, priority, projectKey);
-    addTodoToProject(projectKey, thisTodo);
+    todos.push(todo(title, date, description, priority, projectKey));
+    const thisTodo = todos[(todos.length-1)];
     thisTodo.load();
     if(isDone) thisTodo.toggleDone();
-    todos.push(thisTodo);
     dataStorage.storeTodo(thisTodo.data);
 }
 
 export {
     todo,
     editNewTodo,
-    createTodo
+    createTodo,
+    deleteTodosOfProject
 };

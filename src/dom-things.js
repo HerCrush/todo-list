@@ -50,16 +50,22 @@ const domThings = (() => {
         const date = document.createElement('input');
         date.setAttribute('type', 'date');
         const description = document.createElement('input');
+        const notImportantLabel = document.createElement('label');
+        const ImportantLabel = document.createElement('label');
+        const veryImportantLabel = document.createElement('label');
         const priority = (() => {
             const notImportant = document.createElement('input');
             const important = document.createElement('input');
             const veryImportant = document.createElement('input');
             notImportant.setAttribute('type', 'radio');
             notImportant.setAttribute('name', 'priority');
+            notImportant.id = 'not-important';
             important.setAttribute('type', 'radio');
             important.setAttribute('name', 'priority');
+            important.id = 'important';
             veryImportant.setAttribute('type', 'radio');
             veryImportant.setAttribute('name', 'priority');
+            veryImportant.id = 'very-important';
             function getInput () {
                 switch(true) {
                     case notImportant.checked:
@@ -86,22 +92,32 @@ const domThings = (() => {
             acceptBtn.textContent = '✓';
             cancelBtn.textContent = 'cancel';
             deleteBtn.textContent = 'X';
+            notImportantLabel.textContent = 'not important';
+            ImportantLabel.textContent = 'important';
+            veryImportantLabel.textContent = 'very important';
+            notImportantLabel.setAttribute('for', 'not-important');
+            ImportantLabel.setAttribute('for', 'important');
+            veryImportantLabel.setAttribute('for', 'very-important');
             priority.notImportant.value = 'not-important';
             priority.important.value = 'important';
             priority.veryImportant.value = 'very-important';
-            title.classList.add('todo-title');
-            date.classList.add('todo-date');
-            description.classList.add('todo-description');
+            container.classList.add('todo-input');
+            title.classList.add('title-input');
+            date.classList.add('date-input');
+            description.classList.add('description-input');
             priority.notImportant.classList.add('priority');
             priority.important.classList.add('priority');
             priority.veryImportant.classList.add('priority');
+            notImportantLabel.appendChild(priority.notImportant);
+            ImportantLabel.appendChild(priority.important);
+            veryImportantLabel.appendChild(priority.veryImportant);
             container.append(
                 title,
                 date,
                 description,
-                priority.notImportant,
-                priority.important,
-                priority.veryImportant,
+                notImportantLabel,
+                ImportantLabel,
+                veryImportantLabel,
                 acceptBtn,
                 cancelBtn,
                 deleteBtn

@@ -4,6 +4,11 @@
 }
 
 @font-face {
+    font-family: "Gothic medium";
+    src: url("./Zen_Kaku_Gothic_Antique/ZenKakuGothicAntique-Medium.ttf");
+}
+
+@font-face {
     font-family: "Gothic bold";
     src: url("./Zen_Kaku_Gothic_Antique/ZenKakuGothicAntique-Bold.ttf");
 }
@@ -35,27 +40,33 @@ nav {
     border-right: solid 1px hsl(0, 0%, 70%);
 }
 
+h2 {
+    font-size: 18pt;
+}
+
 nav a {
+    color: black;
     margin-top: 15%;
+    text-decoration: none;
+    font-family: "Gothic";
+}
+
+nav a:hover {
+    font-family: "Gothic medium";
 }
 
 main {
     grid-area: c;
-    padding: 1%;
-    padding-left: 4%;
-}
-
-#project-input {
-    margin: 3.5% 0%;
+    padding: 5% 1% 2% 4%;
 }
 
 .project {
-    margin: 3% 0%;
+    margin-bottom: 3%;
 }
 
 .project-header {
     display: flex;
-    margin: 2% 0%;
+    margin-bottom: 1.5%;
 }
 
 h3 {
@@ -64,13 +75,55 @@ h3 {
 }
 
 .delete-project {
-    font-family: "Gothic bold";
+    font-weight: 400;
     border: none;
     background-color: transparent;
+    font-size: 20pt;
     padding: 0;
-    font-size: 16pt;
     rotate: 45deg;
     margin-left: 1%;
+}
+
+.todo-input {
+    width: 60vw;
+    background-color: hsl(0, 0%, 95%);
+    border-radius: 20px;
+    padding: 1.5%;
+    display: grid;
+    grid-template-areas:
+        "d d e"
+        "f f f"
+        "g g g"
+        "h h h";
+    gap: 1em;
+}
+
+.todo-input input {
+    font-family: "Gothic";
+    border: none;
+    font-size: 14pt;
+    padding: 0.5em;
+}
+
+.title-input {
+    grid-area: d;
+    justify-self: start;
+}
+
+.date-input {
+    grid-area: e;
+    justify-self: end;
+}
+
+.description-input {
+    grid-area: f;
+    justify-self: start;
+    width: 50%;
+    height: 3em;
+}
+
+.priority {
+    grid-area: g;
 }
 
 .task {
@@ -83,12 +136,52 @@ h3 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    background-color: hsl(0, 0%, 97%);
+    background-color: hsl(0, 0%, 95%);
     border: solid 1px hsl(0, 0%, 70%);
     border-radius: 20px;
     width: 60vw;
     padding: 0px 20px;
     line-height: 300%;
+}
+
+.task-card:hover {
+    background-color: hsl(0, 0%, 97%);
+}
+
+.task-card[data-priority="not-important"] {
+    background-color: hsl(209, 100%, 90%);
+    border-color: hsl(209, 100%, 50%);
+}
+
+.task-card[data-priority="not-important"]:hover {
+    background-color: hsl(209, 100%, 93%);
+}
+
+.task-card[data-priority="important"] {
+    background-color: hsl(60, 100%, 90%);
+    border-color: hsl(60, 100%, 50%);
+}
+
+.task-card[data-priority="important"]:hover {
+    background-color: hsl(60, 100%, 93%);
+}
+
+.task-card[data-priority="very-important"] {
+    background-color: hsl(0, 100%, 90%);
+    border-color: hsl(0, 100%, 50%);
+}
+
+.task-card[data-priority="very-important"]:hover {
+    background-color: hsl(0, 100%, 93%);
+}
+
+.task-card[data-done="true"] {
+    background-color: hsl(120, 100%, 90%);
+    border-color: hsl(120, 100%, 50%);
+}
+
+.task-card[data-done="true"]:hover {
+    background-color: hsl(120, 100%, 93%);
 }
 
 .task button {
@@ -100,28 +193,8 @@ h3 {
     width: 60vw;
 }
 
-.task-card[data-done="true"] {
-    background-color: hsl(120, 100%, 90%);
-    border-color: hsl(120, 100%, 50%);
-}
-
 .collapsed p {
     display: none;
-}
-
-div[data-priority="not-important"] {
-    background-color: hsl(209, 100%, 90%);
-    border-color: hsl(209, 100%, 50%);
-}
-
-div[data-priority="important"] {
-    background-color: hsl(60, 100%, 90%);
-    border-color: hsl(60, 100%, 50%);
-}
-
-div[data-priority="very-important"] {
-    background-color: hsl(0, 100%, 90%);
-    border-color: hsl(0, 100%, 50%);
 }
 
 .new-todo {

@@ -95,6 +95,7 @@ const domThings = (() => {
             notImportantLabel.textContent = 'not important';
             ImportantLabel.textContent = 'important';
             veryImportantLabel.textContent = 'very important';
+            description.setAttribute('maxlenght', '280');
             notImportantLabel.setAttribute('for', 'not-important');
             ImportantLabel.setAttribute('for', 'important');
             veryImportantLabel.setAttribute('for', 'very-important');
@@ -108,15 +109,18 @@ const domThings = (() => {
             priority.notImportant.classList.add('priority');
             priority.important.classList.add('priority');
             priority.veryImportant.classList.add('priority');
-            notImportantLabel.appendChild(priority.notImportant);
-            ImportantLabel.appendChild(priority.important);
-            veryImportantLabel.appendChild(priority.veryImportant);
+            acceptBtn.classList.add('accept');
+            cancelBtn.classList.add('cancel');
+            deleteBtn.classList.add('delete');
             container.append(
                 title,
                 date,
                 description,
+                priority.notImportant,
                 notImportantLabel,
+                priority.important,
                 ImportantLabel,
+                priority.veryImportant,
                 veryImportantLabel,
                 acceptBtn,
                 cancelBtn,
@@ -164,6 +168,8 @@ const domThings = (() => {
             bigContainer.classList.add('task');
             container.classList.add('task-card');
             container.classList.add('collapsed');
+            titleH.classList.add('title');
+            dateH.classList.add('date');
             doneBtn.classList.add('task-done');
             doneBtn.dataset.done = false;
             editBtn.classList.add('task-edit');

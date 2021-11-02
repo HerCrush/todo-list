@@ -21,6 +21,16 @@ body {
     grid-template-columns: 15vw 1fr;
     font-family: "Gothic";
     font-size: 14pt;
+    --red: hsl(0, 100%, 50%);
+    --light-red: hsl(0, 100%, 90%);
+    --blue: hsl(209, 100%, 50%);
+    --light-blue: hsl(209, 100%, 90%);
+    --yellow: hsl(60, 100%, 50%);
+    --light-yellow: hsl(60, 100%, 90%);
+}
+
+input:focus {
+    outline: none;
 }
 
 #title {
@@ -49,6 +59,7 @@ nav a {
     margin-top: 15%;
     text-decoration: none;
     font-family: "Gothic";
+    overflow: hidden;
 }
 
 nav a:hover {
@@ -58,6 +69,33 @@ nav a:hover {
 main {
     grid-area: c;
     padding: 5% 1% 2% 4%;
+}
+
+#project-input {
+    font-family: "Gothic bold";
+    font-size: 20pt;
+    border: none;
+    border-radius: 5px;
+    background-color: hsl(0, 0%, 97%);
+    padding: 0.2em 0.2em 0.3em 0.3em;
+    width: 10vw;
+}
+
+#new-project {
+    font-family: "Gothic bold";
+    font-size: 18pt;
+    color: hsl(0, 0%, 50%);
+    line-height: 100%;
+    margin-left: 1em;
+    width: 1.5em;
+    height: 1.5em;
+    background-color: hsl(0, 0%, 97%);
+    border: solid 1px hsl(0, 0%, 70%);
+    border-radius: 50%;
+}
+
+#new-project:hover {
+    background-color: hsl(0, 0%, 92%);;
 }
 
 .project {
@@ -94,7 +132,7 @@ h3 {
         "d d e"
         "f f f"
         "g g g"
-        "h h h";
+        ". . h";
     gap: 1em;
 }
 
@@ -103,6 +141,7 @@ h3 {
     border: none;
     font-size: 14pt;
     padding: 0.5em;
+    border-radius: 5px;
 }
 
 .title-input {
@@ -118,12 +157,68 @@ h3 {
 .description-input {
     grid-area: f;
     justify-self: start;
-    width: 50%;
+    width: 75%;
     height: 3em;
 }
 
 .priority {
     grid-area: g;
+    display: none;
+}
+
+.todo-input label {
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 0.5em 1em;
+}
+
+.priority:checked + label {
+    transform: scale(0.85);
+}
+
+label[for="not-important"] {
+    background-color: var(--light-blue);
+    justify-self: right;
+}
+
+label[for="important"] {
+    background-color: var(--light-yellow);
+    justify-self: center;
+}
+
+label[for="very-important"] {
+    background-color: var(--light-red);
+    justify-self: left;
+}
+
+.todo-input button {
+    padding: 0.25em 0.5em;
+    font-size: 14pt;
+}
+
+.todo-input .accept {
+    grid-area: h;
+    justify-self: left;
+    margin-left: 20%;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+}
+
+.todo-input .cancel {
+    grid-area: h;
+    justify-self: center;
+    border-radius: 5px;
+    margin: 0.15em 2em;
+}
+
+.todo-input .delete {
+    grid-area: h;
+    justify-self: right;
+    margin-right: 20%;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
 }
 
 .task {
@@ -133,24 +228,34 @@ h3 {
 }
 
 .task-card {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-areas:
+        "i j"
+        "k k";
     justify-content: space-between;
     background-color: hsl(0, 0%, 95%);
     border: solid 1px hsl(0, 0%, 70%);
     border-radius: 20px;
     width: 60vw;
     padding: 0px 20px;
-    line-height: 300%;
+    max-height: 30vh;
+    overflow: hidden;
+    transition: max-height 500ms linear;
 }
 
 .task-card:hover {
     background-color: hsl(0, 0%, 97%);
 }
 
+.collapsed {
+    max-height: 3em;
+    overflow: hidden;
+    transition: max-height 0s;
+}
+
 .task-card[data-priority="not-important"] {
-    background-color: hsl(209, 100%, 90%);
-    border-color: hsl(209, 100%, 50%);
+    background-color: var(--light-blue);
+    border-color: var(--blue);
 }
 
 .task-card[data-priority="not-important"]:hover {
@@ -158,8 +263,8 @@ h3 {
 }
 
 .task-card[data-priority="important"] {
-    background-color: hsl(60, 100%, 90%);
-    border-color: hsl(60, 100%, 50%);
+    background-color: var(--light-yellow);
+    border-color: var(--yellow);
 }
 
 .task-card[data-priority="important"]:hover {
@@ -167,8 +272,8 @@ h3 {
 }
 
 .task-card[data-priority="very-important"] {
-    background-color: hsl(0, 100%, 90%);
-    border-color: hsl(0, 100%, 50%);
+    background-color: var(--light-red);
+    border-color: var(--red);
 }
 
 .task-card[data-priority="very-important"]:hover {
@@ -184,17 +289,31 @@ h3 {
     background-color: hsl(120, 100%, 93%);
 }
 
-.task button {
-    height: 2em;
-    margin: 1% 0% 1% 2%;
+h4 {
+    margin: 1em 0;
+}
+
+.task-card .title {
+    grid-area: i;
+    justify-self: left;
+}
+
+.task-card .date {
+    grid-area: j;
+    justify-self: right;
 }
 
 .task-card p {
-    width: 60vw;
+    grid-area: k;
+    margin: 0.5em 1em 1em 0;
+    line-height: 2em;
+    font-size: 12pt;
+    overflow: hidden;
 }
 
-.collapsed p {
-    display: none;
+.task button {
+    height: 2em;
+    margin: 1% 0% 1% 2%;
 }
 
 .new-todo {

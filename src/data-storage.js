@@ -39,6 +39,9 @@ const dataStorage = (() => {
     function loadStoredData() {
         projectCounter = JSON.parse(localStorage.getItem('projectCounter'));
         todoCounter = JSON.parse(localStorage.getItem('todoCounter'));
+        if(projectCounter === 0) {
+            return 'nothing stored';
+        }
         for(let projectIndex = 0; projectIndex < projectCounter; projectIndex += 1) {
             const data = JSON.parse(localStorage.getItem(`project${projectIndex}`));
             createProject(data.name);

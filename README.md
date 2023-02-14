@@ -1,3 +1,16 @@
 # To-do list
-A tasks lists where you can add projects and tasks to that projects, alongside with date, description and priority for each task.
-It supports local storage.
+An app that allows the creation of lists of tasks. The goal of making this project was to apply the different newly learnt **object oriented programming** principles.
+
+I also implemented the [Web Storage API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API) for the first time in order to save user data between sessions.
+
+## How to use
+**Add tasks** to the default "To do:" project by clicking on the "**+**" button below it. You can specify title, description, due date, and level of importance.
+Assignments can be marked as done when completed, as well as edited or deleted.
+
+You can also **create other projects** to separate your to-dos by concerns by entering a title in the "New Project" field and clicking the button on its right. Click the cross on its right to delete a project.
+
+Jump to a specific project with the navigation panel on the left of the screen.
+
+**[LIVE VERSION HERE](https://nachito-schon.github.io/todo-list/)**
+
+![to-do-preview-800w](https://user-images.githubusercontent.com/85847402/218726262-24fcb599-07c0-49d7-a72f-119dee944a49.png)

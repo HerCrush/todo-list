@@ -121,8 +121,6 @@ function todo(title, date, description, priority, projectKey) {
             dom.editBtn.classList.remove('hidden');
             dom.deleteBtn.classList.remove('hidden');
         });
-
-        todoEdition.deleteBtn.addEventListener('click', deleteTodo);
     }
     
     function deleteTodo() {
@@ -185,7 +183,6 @@ function editNewTodo(todosContainer, addTodoButton, projectKey) {
     });
 
     todoEdition.cancelBtn.addEventListener('click', endEditing);
-    todoEdition.deleteBtn.addEventListener('click', endEditing);
 }
 
 function createTodo(title, date, description, priority, projectKey, isDone) {

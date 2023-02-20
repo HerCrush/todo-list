@@ -46,6 +46,7 @@ const domThings = (() => {
 
     function todoInput() {
         const container = document.createElement('div');
+        const headContainer = document.createElement('div');
         const title = document.createElement('input');
         const date = document.createElement('input');
         date.setAttribute('type', 'date');
@@ -54,9 +55,11 @@ const domThings = (() => {
         const ImportantLabel = document.createElement('label');
         const veryImportantLabel = document.createElement('label');
         const priority = (() => {
+            const container = document.createElement('div');
             const notImportant = document.createElement('input');
             const important = document.createElement('input');
             const veryImportant = document.createElement('input');
+            container.classList.add('priority-container')
             notImportant.setAttribute('type', 'radio');
             notImportant.setAttribute('name', 'priority');
             notImportant.id = 'not-important';
@@ -80,18 +83,17 @@ const domThings = (() => {
                 }
             }
 
-            return { notImportant, important, veryImportant, getInput };
+            return { container, notImportant, important, veryImportant, getInput };
         })();
 
+        const buttonsContainer = document.createElement('div');
         const acceptBtn = document.createElement('button');
         const cancelBtn = document.createElement('button');
-        const deleteBtn = document.createElement('button');
         const load = (projContainer) => {
             title.placeholder = 'Title...';
             description.placeholder = 'Description...';
             acceptBtn.textContent = '✓';
             cancelBtn.textContent = 'cancel';
-            deleteBtn.textContent = 'X';
             notImportantLabel.textContent = 'not important';
             ImportantLabel.textContent = 'important';
             veryImportantLabel.textContent = 'very important';
@@ -103,28 +105,34 @@ const domThings = (() => {
             priority.important.value = 'important';
             priority.veryImportant.value = 'very-important';
             container.classList.add('todo-input');
+            headContainer.classList.add('input-head-container');
             title.classList.add('title-input');
             date.classList.add('date-input');
             description.classList.add('description-input');
             priority.notImportant.classList.add('priority');
             priority.important.classList.add('priority');
             priority.veryImportant.classList.add('priority');
+            buttonsContainer.classList.add('buttons-container');
             acceptBtn.classList.add('accept');
             cancelBtn.classList.add('cancel');
-            deleteBtn.classList.add('delete');
+            headContainer.append(title, date);
             container.append(
-                title,
-                date,
+                headContainer,
                 description,
+                priority.container,
+                buttonsContainer
+            );
+            priority.container.append(
                 priority.notImportant,
                 notImportantLabel,
                 priority.important,
                 ImportantLabel,
                 priority.veryImportant,
-                veryImportantLabel,
-                acceptBtn,
+                veryImportantLabel
+            );
+            buttonsContainer.append(
                 cancelBtn,
-                deleteBtn
+                acceptBtn,
             );
 
             projContainer.appendChild(container);
@@ -138,7 +146,6 @@ const domThings = (() => {
             priority,
             acceptBtn,
             cancelBtn,
-            deleteBtn,
             load
         }
 

@@ -1,14 +1,17 @@
 const domThings = (() => {
 
     const projectInput = (() => {
+        const container = document.createElement('div');
         const input = document.createElement('input');
         const button = document.createElement('button');
         const load = () => {
+            container.classList.add('new-project-container');
             input.placeholder = 'New Project';
             input.id = 'project-input';
             button.textContent = '+';
             button.id = 'new-project';
-            document.querySelector('main').append( input, button );
+            container.append( input, button );
+            document.querySelector('main').appendChild( container );
         }
     
         return { input, button, load };

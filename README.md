@@ -13,4 +13,4 @@ Jump to a specific project with the navigation panel on the left of the screen.
 
 **[LIVE VERSION HERE](https://nachito-schon.github.io/todo-list/)**
 
-![to-do-preview-800w](https://user-images.githubusercontent.com/85847402/218726262-24fcb599-07c0-49d7-a72f-119dee944a49.png)
+![to-do](https://user-images.githubusercontent.com/85847402/233861116-816c09e2-f952-49ef-8ad9-95819c3671bb.jpg)
